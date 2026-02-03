@@ -1,0 +1,2 @@
+source /home/frank/coding/esp32/rokkit-deck/build/bootloader/gdbinit/symbols
+source /home/frank/coding/esp32/rokkit-deck/build/bootloader/gdbinit/connect

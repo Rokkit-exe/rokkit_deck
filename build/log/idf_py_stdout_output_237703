@@ -1,0 +1,60 @@
+Command: /home/frank/.espressif/python_env/idf5.5_py3.13_env/bin/python /opt/esp-idf/tools/idf_monitor.py -p /dev/ttyACM0 -b 115200 --toolchain-prefix xtensa-esp32s3-elf- --target esp32s3 --revision 0 /home/frank/coding/esp32/rokkit-deck/build/rokkit-deck.elf /home/frank/coding/esp32/rokkit-deck/build/bootloader/bootloader.elf -m '/home/frank/.espressif/python_env/idf5.5_py3.13_env/bin/python' '/opt/esp-idf/tools/idf.py' '-p' '/dev/ttyACM0'
+� segment 1: paddr=00021f8c vaddr=3fc94e00 size=02c94h ( 11412) load�ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x1 (POWERON),boot:0x2b (SPI_FAST_FLASH_BOOT)
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x158c
+load:0x403c8700,len:0xd24
+load:0x403cb700,len:0x2f34
+entry 0x403c8924
+[0;32mI (24) boot: ESP-IDF HEAD-HASH-NOTFOUND 2nd stage bootloader[0m
+[0;32mI (25) boot: compile time Feb  3 2026 12:32:35[0m
+[0;32mI (25) boot: Multicore bootloader[0m
+[0;32mI (26) boot: chip revision: v0.2[0m
+[0;32mI (29) boot: efuse block revision: v1.3[0m
+[0;32mI (32) boot.esp32s3: Boot SPI Speed : 80MHz[0m
+[0;32mI (36) boot.esp32s3: SPI Mode       : DIO[0m
+[0;32mI (40) boot.esp32s3: SPI Flash Size : 2MB[0m
+[0;32mI (44) boot: Enabling RNG early entropy source...[0m
+[0;32mI (48) boot: Partition Table:[0m
+[0;32mI (51) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (70) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (77) boot: End of partition table[0m
+[0;32mI (80) esp_image: segment 0: paddr=00010020 vaddr=3c050020 size=11f64h ( 73572) map[0m
+[0;32mI (100) esp_image: segment 1: paddr=00021f8c vaddr=3fc94e00 size=02c94h ( 11412) load[0m
+[0;32mI (103) esp_image: segment 2: paddr=00024c28 vaddr=40374000 size=0b3f0h ( 46064) load[0m
+[0;32mI (114) esp_image: segment 3: paddr=00030020 vaddr=42000020 size=4fe30h (327216) map[0m
+[0;32mI (172) esp_image: segment 4: paddr=0007fe58 vaddr=4037f3f0 size=0599ch ( 22940) load[0m
+[0;32mI (178) esp_image: segment 5: paddr=000857fc vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (185) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (185) boot: Disabling RNG early entropy source...[0m
+[0;32mI (198) cpu_start: Multicore app[0m
+[0;32mI (206) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (207) cpu_start: Pro cpu start user code[0m
+[0;32mI (207) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (209) app_init: Application information:[0m
+[0;32mI (212) app_init: Project name:     rokkit-deck[0m
+[0;32mI (217) app_init: App version:      1[0m
+[0;32mI (220) app_init: Compile time:     Feb  3 2026 12:32:37[0m
+[0;32mI (225) app_init: ELF file SHA256:  d87a1a055...[0m
+[0;32mI (229) app_init: ESP-IDF:          HEAD-HASH-NOTFOUND[0m
+[0;32mI (234) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (238) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (242) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (246) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (252) heap_init: At 3FCA8598 len 00041178 (260 KiB): RAM[0m
+[0;32mI (257) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (263) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (268) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM[0m
+[0;32mI (274) spi_flash: detected chip: generic[0m
+[0;32mI (277) spi_flash: flash io: dio[0m
+[0;33mW (280) spi_flash: Detected size(8192k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;32mI (292) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (298) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (305) main_task: Started on CPU0[0m
+[0;32mI (325) main_task: Calling app_main()[0m
+[0;32mI (325) st7796: version: 1.4.0[0m
+[0;32mI (325) st7796_general: LCD panel create success, version: 1.4.0[0m
