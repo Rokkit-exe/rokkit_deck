@@ -1,55 +1,28 @@
-# Prerequisites
-*.d
+# Build output
+/build/
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
 
-# Linker output
-*.ilk
-*.map
-*.exp
+# Ninja files (if using Ninja)
+build.ninja
+.ninja_log
+.ninja_deps
 
-# Precompiled Headers
-*.gch
-*.pch
+# sdkconfig (optional – see note below)
+sdkconfig
+sdkconfig.old
+sdkconfig.defaults
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
+# VSCode
+.vscode/
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+# CLion
+.idea/
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+# macOS
+.DS_Store
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
-
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
-
-# debug information files
-*.dwo
