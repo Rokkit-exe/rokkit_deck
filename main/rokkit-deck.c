@@ -1,3 +1,4 @@
+#include "bsp_waveshare.h"
 #include "deck_gl.h"
 #include "driver/gpio.h"
 #include "driver/spi_master.h"
@@ -15,7 +16,6 @@
 #include "freertos/semphr.h"
 #include "freertos/task.h"
 #include "lvgl.h"
-#include "waveshare_lcd.h"
 #include <stdint.h>
 #include <stdio.h>
 
@@ -34,11 +34,28 @@
 #define C_INT 17
 #define C_RST 16
 
-// ✅ Global handles
-static esp_lcd_panel_io_handle_t panel_io_handle = NULL;
-static esp_lcd_panel_io_handle_t tp_io_handle = NULL;
-static esp_lcd_panel_handle_t panel_handle = NULL;
-static esp_lcd_touch_handle_t tp_handle = NULL;
+static bsp_config_t lcd_config = {.lcd_host = LCD_HOST,
+                                  .spi_miso = SPI_MISO,
+                                  .spi_mosi = SPI_MOSI,
+                                  .spi_sclk = SPI_SCLK,
+                                  .lcd_cs = LCD_CS,
+                                  .lcd_dc = LCD_DC,
+                                  .lcd_rst = LCD_RST,
+                                  .lcd_bl = LCD_BL,
+                                  .lcd_hor_res = LCD_HOR_RES,
+                                  .lcd_ver_res = LCD_VER_RES,
+                                  .c_sda = C_SDA,
+                                  .c_scl = C_SCL,
+                                  .c_int = C_INT,
+                                  .c_rst = C_RST};
+static bsp_handles_t handles = {
+    .lcd_io = NULL,
+    .lcd_panel = NULL,
+    .touch_io = NULL,
+    .touch_panel = NULL,
+    .lcd_width = LCD_HOR_RES,
+    .lcd_height = LCD_VER_RES,
+};
 
 // ✅ LVGL tick increment - called from timer ISR
 static void lvgl_tick_inc_cb(void *arg) { lv_tick_inc(10); }
@@ -54,20 +71,20 @@ static void lvgl_timer_task(void *arg) {
 
 // ✅ Fixed touchpad read callback with coordinate transformation
 static void touchpad_read(lv_indev_t *indev, lv_indev_data_t *data) {
-  if (tp_handle == NULL) {
+  if (handles.touch_panel == NULL) {
     data->state = LV_INDEV_STATE_RELEASED;
     return;
   }
 
-  esp_lcd_touch_read_data(tp_handle);
+  esp_lcd_touch_read_data(handles.touch_panel);
 
   uint16_t touch_x[1];
   uint16_t touch_y[1];
   uint16_t touch_strength[1];
   uint8_t touch_count = 0;
 
-  bool touched = esp_lcd_touch_get_coordinates(tp_handle, touch_x, touch_y,
-                                               touch_strength, &touch_count, 1);
+  bool touched = esp_lcd_touch_get_coordinates(
+      handles.touch_panel, touch_x, touch_y, touch_strength, &touch_count, 1);
 
   if (touched && touch_count > 0) {
     uint16_t raw_x = touch_x[0];
@@ -83,28 +100,11 @@ static void touchpad_read(lv_indev_t *indev, lv_indev_data_t *data) {
     data->state = LV_INDEV_STATE_RELEASED;
   }
 }
-
 void app_main(void) {
 
-  waveshare_lcd_config_t lcd_config = {.lcd_host = LCD_HOST,
-                                       .spi_miso = SPI_MISO,
-                                       .spi_mosi = SPI_MOSI,
-                                       .spi_sclk = SPI_SCLK,
-                                       .lcd_cs = LCD_CS,
-                                       .lcd_dc = LCD_DC,
-                                       .lcd_rst = LCD_RST,
-                                       .lcd_bl = LCD_BL,
-                                       .lcd_hor_res = LCD_HOR_RES,
-                                       .lcd_ver_res = LCD_VER_RES,
-                                       .c_sda = C_SDA,
-                                       .c_scl = C_SCL,
-                                       .c_int = C_INT,
-                                       .c_rst = C_RST};
+  esp_err_t err = bsp_init(&lcd_config, &handles);
 
-  ESP_ERROR_CHECK(
-      init_st7796_panel(&lcd_config, &panel_handle, &panel_io_handle));
-
-  if (panel_handle == NULL) {
+  if (err != ESP_OK || handles.lcd_panel == NULL || handles.lcd_io == NULL) {
     ESP_LOGE("MAIN", "❌ LCD panel NOT initialized!");
     return;
   }
@@ -112,26 +112,18 @@ void app_main(void) {
 
   lcd_backlight_on(LCD_BL);
   vTaskDelay(pdMS_TO_TICKS(100));
-  lcd_set_orientation(&panel_handle, INVERTED_LANDSCAPE);
+  lcd_set_orientation(&handles.lcd_panel, INVERTED_LANDSCAPE);
   vTaskDelay(pdMS_TO_TICKS(100));
 
-  esp_err_t touch_err =
-      init_gt911_panel(&lcd_config, &tp_io_handle, &tp_handle);
-  if (touch_err == ESP_OK && tp_handle != NULL) {
-    ESP_LOGI("MAIN", "✓ Touch initialized");
-  } else {
-    ESP_LOGW("MAIN", "⚠ Touch not available");
-  }
-
   deck_config_t deck_cfg = {
-      .io_handle = panel_io_handle,
-      .panel_handle = panel_handle,
+      .io_handle = handles.lcd_io,
+      .panel_handle = handles.lcd_panel,
       .hor_res = LCD_HOR_RES,
       .ver_res = LCD_VER_RES,
   };
-  DeckGL *deck = init_deck_display(&deck_cfg, panel_io_handle);
+  DeckGL *deck = init_deck_display(&deck_cfg, handles.lcd_io);
 
-  if (tp_handle != NULL) {
+  if (handles.touch_panel != NULL) {
     lv_indev_t *indev = lv_indev_create();
     lv_indev_set_type(indev, LV_INDEV_TYPE_POINTER);
     lv_indev_set_read_cb(indev, touchpad_read);
