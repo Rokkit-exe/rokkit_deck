@@ -1,0 +1,481 @@
+Command: /home/frank/.espressif/python_env/idf5.5_py3.14_env/bin/python /opt/esp-idf/tools/idf_monitor.py -p /dev/ttyACM0 -b 115200 --toolchain-prefix xtensa-esp32s3-elf- --target esp32s3 --revision 0 /home/frank/coding/esp32/rokkit-deck/build/rokkit-deck.elf /home/frank/coding/esp32/rokkit-deck/build/bootloader/bootloader.elf -m '/home/frank/.espressif/python_env/idf5.5_py3.14_env/bin/python' '/opt/esp-idf/tools/idf.py' '-p' '/dev/ttyACM0'
+S�Jb���5
+[0;32mI (114) esp_image: segment 3: paddr=00030020 vaddr=4200002�ESP-ROM:esp32s3-20210327[0m
+Build:Mar 27 2021
+rst:0x1 (POWERON),boot:0x8 (SPI_FAST_FLASH_BOOT)
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x158c
+load:0x403c8700,len:0xd24
+load:0x403cb700,len:0x2f34
+entry 0x403c8924
+[0;32mI (24) boot: ESP-IDF HEAD-HASH-NOTFOUND 2nd stage bootloader[0m
+[0;32mI (25) boot: compile time Feb 14 2026 11:29:13[0m
+[0;32mI (25) boot: Multicore bootloader[0m
+[0;32mI (26) boot: chip revision: v0.2[0m
+[0;32mI (29) boot: efuse block revision: v1.3[0m
+[0;32mI (32) boot.esp32s3: Boot SPI Speed : 80MHz[0m
+[0;32mI (36) boot.esp32s3: SPI Mode       : DIO[0m
+[0;32mI (40) boot.esp32s3: SPI Flash Size : 8MB[0m
+[0;32mI (44) boot: Enabling RNG early entropy source...[0m
+[0;32mI (48) boot: Partition Table:[0m
+[0;32mI (51) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (70) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (77) boot: End of partition table[0m
+[0;32mI (80) esp_image: segment 0: paddr=00010020 vaddr=3c060020 size=140ech ( 82156) map[0m
+[0;32mI (102) esp_image: segment 1: paddr=00024114 vaddr=3fc95600 size=02cd4h ( 11476) load[0m
+[0;32mI (105) esp_image: segment 2: paddr=00026df0 vaddr=40374000 size=09228h ( 37416) load[0m
+[0;32mI (114) esp_image: segment 3: paddr=00030020 vaddr=42000020 size=57eb4h (360116) map[0m
+[0;32mI (178) esp_image: segment 4: paddr=00087edc vaddr=4037d228 size=08314h ( 33556) load[0m
+[0;32mI (185) esp_image: segment 5: paddr=000901f8 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (192) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (193) boot: Disabling RNG early entropy source...[0m
+[0;32mI (204) cpu_start: Multicore app[0m
+[0;32mI (212) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (213) cpu_start: Pro cpu start user code[0m
+[0;32mI (213) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (214) app_init: Application information:[0m
+[0;32mI (218) app_init: Project name:     rokkit-deck[0m
+[0;32mI (222) app_init: App version:      ed8b921-dirty[0m
+[0;32mI (227) app_init: Compile time:     Feb 14 2026 11:29:06[0m
+[0;32mI (232) app_init: ELF file SHA256:  89af47229...[0m
+[0;32mI (236) app_init: ESP-IDF:          HEAD-HASH-NOTFOUND[0m
+[0;32mI (241) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (245) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (249) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (253) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (259) heap_init: At 3FCBDFA0 len 0002B770 (173 KiB): RAM[0m
+[0;32mI (264) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (269) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (275) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM[0m
+[0;32mI (281) spi_flash: detected chip: generic[0m
+[0;32mI (284) spi_flash: flash io: dio[0m
+[0;32mI (287) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (293) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (300) main_task: Started on CPU0[0m
+[0;32mI (340) main_task: Calling app_main()[0m
+[0;32mI (340) st7796: version: 1.4.0[0m
+[0;32mI (340) st7796_general: LCD panel create success, version: 1.4.0[0m
+[0;32mI (570) MAIN: ✓ LCD panel initialized[0m
+[0;32mI (1000) GT911: TouchPad_ID:0x39,0x31,0x31[0m
+[0;32mI (1000) GT911: TouchPad_Config_Version:255[0m
+[0;32mI (1000) GT911: ✓ GT911 driver initialized successfully[0m
+[0;32mI (1000) MAIN: ✓ Touch initialized[0m
+[0;32mI (1010) LVGL: PARTIAL mode: 480x320, buffer: 43200 bytes (32 lines)[0m
+[0;32mI (1010) MAIN: ✓ Touch registered with LVGL[0m
+[0;32mI (1050) GRID: Created 4x2 button grid + 3 sliders[0m
+[0;32mI (1050) LVGL: Timer task started[0m
+[0;32mI (1180) MAIN: ✓ System initialized[0m
+[0;32mI (3120) TOUCH: Raw: (243, 189) -> Transformed: (189, 77)[0m
+[0;32mI (3120) GRID: Button 2 pressed[0m
+[0;32mI (3160) TOUCH: Raw: (243, 189) -> Transformed: (189, 77)[0m
+[0;32mI (3200) TOUCH: Raw: (243, 189) -> Transformed: (189, 77)[0m
+[0;32mI (3240) GRID: Button 2 released[0m
+[0;32mI (3970) TOUCH: Raw: (236, 197) -> Transformed: (197, 84)[0m
+[0;32mI (3970) GRID: Button 2 pressed[0m
+[0;32mI (4010) TOUCH: Raw: (236, 197) -> Transformed: (197, 84)[0m
+[0;32mI (4050) TOUCH: Raw: (236, 197) -> Transformed: (197, 84)[0m
+[0;32mI (4090) GRID: Button 2 released[0m
+[0;32mI (4460) TOUCH: Raw: (224, 205) -> Transformed: (205, 96)[0m
+[0;32mI (4460) GRID: Button 2 pressed[0m
+[0;32mI (4500) TOUCH: Raw: (224, 205) -> Transformed: (205, 96)[0m
+[0;32mI (4540) TOUCH: Raw: (224, 205) -> Transformed: (205, 96)[0m
+[0;32mI (4580) GRID: Button 2 released[0m
+[0;32mI (4790) TOUCH: Raw: (194, 186) -> Transformed: (186, 126)[0m
+[0;32mI (4790) GRID: Button 6 pressed[0m
+[0;32mI (4830) TOUCH: Raw: (194, 186) -> Transformed: (186, 126)[0m
+[0;32mI (4870) TOUCH: Raw: (194, 186) -> Transformed: (186, 126)[0m
+[0;32mI (4910) GRID: Button 6 released[0m
+[0;32mI (5110) TOUCH: Raw: (190, 279) -> Transformed: (279, 130)[0m
+[0;32mI (5110) GRID: Button 7 pressed[0m
+[0;32mI (5150) TOUCH: Raw: (190, 279) -> Transformed: (279, 130)[0m
+[0;32mI (5190) TOUCH: Raw: (190, 279) -> Transformed: (279, 130)[0m
+[0;32mI (5230) GRID: Button 7 released[0m
+[0;32mI (5590) TOUCH: Raw: (181, 321) -> Transformed: (321, 139)[0m
+[0;32mI (5590) GRID: Button 7 pressed[0m
+[0;32mI (5630) TOUCH: Raw: (181, 321) -> Transformed: (321, 139)[0m
+[0;32mI (5670) GRID: Button 7 released[0m
+[0;32mI (6480) TOUCH: Raw: (172, 448) -> Transformed: (448, 148)[0m
+[0;32mI (6480) GRID: Button 8 pressed[0m
+[0;32mI (6520) TOUCH: Raw: (172, 448) -> Transformed: (448, 148)[0m
+[0;32mI (6560) GRID: Button 8 released[0m
+[0;32mI (6720) TOUCH: Raw: (152, 425) -> Transformed: (425, 168)[0m
+[0;32mI (6720) GRID: Button 8 pressed[0m
+[0;32mI (6760) TOUCH: Raw: (152, 425) -> Transformed: (425, 168)[0m
+[0;32mI (6800) GRID: Button 8 released[0m
+[0;32mI (6960) TOUCH: Raw: (169, 435) -> Transformed: (435, 151)[0m
+[0;32mI (6960) GRID: Button 8 pressed[0m
+[0;32mI (7000) TOUCH: Raw: (169, 435) -> Transformed: (435, 151)[0m
+[0;32mI (7040) TOUCH: Raw: (169, 435) -> Transformed: (435, 151)[0m
+[0;32mI (7080) GRID: Button 8 released[0m
+[0;32mI (7640) TOUCH: Raw: (241, 428) -> Transformed: (428, 79)[0m
+[0;32mI (7640) GRID: Button 4 pressed[0m
+[0;32mI (7680) TOUCH: Raw: (241, 428) -> Transformed: (428, 79)[0m
+[0;32mI (7720) GRID: Button 4 released[0m
+[0;32mI (8240) TOUCH: Raw: (246, 428) -> Transformed: (428, 74)[0m
+[0;32mI (8240) GRID: Button 4 pressed[0m
+[0;32mI (8280) TOUCH: Raw: (246, 428) -> Transformed: (428, 74)[0m
+[0;32mI (8320) TOUCH: Raw: (246, 428) -> Transformed: (428, 74)[0m
+[0;32mI (8360) GRID: Button 4 released[0m
+[0;32mI (9120) TOUCH: Raw: (251, 302) -> Transformed: (302, 69)[0m
+[0;32mI (9120) GRID: Button 3 pressed[0m
+[0;32mI (9160) TOUCH: Raw: (251, 302) -> Transformed: (302, 69)[0m
+[0;32mI (9200) TOUCH: Raw: (251, 302) -> Transformed: (302, 69)[0m
+[0;32mI (9240) GRID: Button 3 released[0m
+[0;32mI (9810) TOUCH: Raw: (260, 301) -> Transformed: (301, 60)[0m
+[0;32mI (9810) GRID: Button 3 pressed[0m
+[0;32mI (9850) TOUCH: Raw: (260, 301) -> Transformed: (301, 60)[0m
+[0;32mI (9890) TOUCH: Raw: (260, 301) -> Transformed: (301, 60)[0m
+[0;32mI (9930) GRID: Button 3 released[0m
+[0;32mI (10700) TOUCH: Raw: (267, 210) -> Transformed: (210, 53)[0m
+[0;32mI (10700) GRID: Button 2 pressed[0m
+[0;32mI (10740) TOUCH: Raw: (267, 210) -> Transformed: (210, 53)[0m
+[0;32mI (10780) TOUCH: Raw: (267, 210) -> Transformed: (210, 53)[0m
+[0;32mI (10820) GRID: Button 2 released[0m
+[0;32mI (11590) TOUCH: Raw: (247, 196) -> Transformed: (196, 73)[0m
+[0;32mI (11590) GRID: Button 2 pressed[0m
+[0;32mI (11630) TOUCH: Raw: (247, 196) -> Transformed: (196, 73)[0m
+[0;32mI (11670) TOUCH: Raw: (247, 196) -> Transformed: (196, 73)[0m
+[0;32mI (11710) GRID: Button 2 released[0m
+[0;32mI (12560) TOUCH: Raw: (238, 83) -> Transformed: (83, 82)[0m
+[0;32mI (12560) GRID: Button 1 pressed[0m
+[0;32mI (12600) TOUCH: Raw: (238, 83) -> Transformed: (83, 82)[0m
+[0;32mI (12640) GRID: Button 1 released[0m
+[0;32mI (13080) TOUCH: Raw: (154, 76) -> Transformed: (76, 166)[0m
+[0;32mI (13080) GRID: Button 5 pressed[0m
+[0;32mI (13120) TOUCH: Raw: (154, 76) -> Transformed: (76, 166)[0m
+[0;32mI (13160) TOUCH: Raw: (154, 76) -> Transformed: (76, 166)[0m
+[0;32mI (13200) GRID: Button 5 released[0m
+[0;32mI (13680) TOUCH: Raw: (144, 198) -> Transformed: (198, 176)[0m
+[0;32mI (13680) GRID: Button 6 pressed[0m
+[0;32mI (13720) TOUCH: Raw: (144, 198) -> Transformed: (198, 176)[0m
+[0;32mI (13760) TOUCH: Raw: (144, 198) -> Transformed: (198, 176)[0m
+[0;32mI (13800) GRID: Button 6 released[0m
+[0;32mI (14090) TOUCH: Raw: (164, 199) -> Transformed: (199, 156)[0m
+[0;32mI (14090) GRID: Button 6 pressed[0m
+[0;32mI (14130) TOUCH: Raw: (164, 199) -> Transformed: (199, 156)[0m
+[0;32mI (14170) TOUCH: Raw: (164, 199) -> Transformed: (199, 156)[0m
+[0;32mI (14210) GRID: Button 6 released[0m
+[0;32mI (14580) TOUCH: Raw: (150, 308) -> Transformed: (308, 170)[0m
+[0;32mI (14580) GRID: Button 7 pressed[0m
+[0;32mI (14620) TOUCH: Raw: (150, 308) -> Transformed: (308, 170)[0m
+[0;32mI (14660) TOUCH: Raw: (150, 308) -> Transformed: (308, 170)[0m
+[0;32mI (14700) GRID: Button 7 released[0m
+[0;32mI (14990) TOUCH: Raw: (152, 317) -> Transformed: (317, 168)[0m
+[0;32mI (14990) GRID: Button 7 pressed[0m
+[0;32mI (15030) TOUCH: Raw: (152, 317) -> Transformed: (317, 168)[0m
+[0;32mI (15070) GRID: Button 7 released[0m
+[0;32mI (15480) TOUCH: Raw: (146, 424) -> Transformed: (424, 174)[0m
+[0;32mI (15480) GRID: Button 8 pressed[0m
+[0;32mI (15520) TOUCH: Raw: (146, 424) -> Transformed: (424, 174)[0m
+[0;32mI (15560) TOUCH: Raw: (146, 424) -> Transformed: (424, 174)[0m
+[0;32mI (15600) GRID: Button 8 released[0m
+[0;32mI (17240) TOUCH: Raw: (43, 388) -> Transformed: (388, 277)[0m
+[0;32mI (17280) TOUCH: Raw: (43, 388) -> Transformed: (388, 277)[0m
+[0;32mI (17320) TOUCH: Raw: (43, 388) -> Transformed: (388, 277)[0m
+[0;32mI (17360) TOUCH: Raw: (43, 388) -> Transformed: (388, 277)[0m
+[0;32mI (17400) TOUCH: Raw: (40, 385) -> Transformed: (385, 280)[0m
+[0;32mI (17440) TOUCH: Raw: (35, 376) -> Transformed: (376, 285)[0m
+[0;32mI (17440) SLIDER: Value: 35[0m
+[0;32mI (17480) TOUCH: Raw: (35, 368) -> Transformed: (368, 285)[0m
+[0;32mI (17480) SLIDER: Value: 27[0m
+[0;32mI (17520) TOUCH: Raw: (36, 357) -> Transformed: (357, 284)[0m
+[0;32mI (17520) SLIDER: Value: 16[0m
+[0;32mI (17560) TOUCH: Raw: (36, 351) -> Transformed: (351, 284)[0m
+[0;32mI (17560) SLIDER: Value: 10[0m
+[0;32mI (17600) TOUCH: Raw: (36, 349) -> Transformed: (349, 284)[0m
+[0;32mI (17600) SLIDER: Value: 8[0m
+[0;32mI (17640) TOUCH: Raw: (38, 348) -> Transformed: (348, 282)[0m
+[0;32mI (17640) SLIDER: Value: 7[0m
+[0;32mI (17680) TOUCH: Raw: (40, 346) -> Transformed: (346, 280)[0m
+[0;32mI (17680) SLIDER: Value: 5[0m
+[0;32mI (17720) TOUCH: Raw: (42, 344) -> Transformed: (344, 278)[0m
+[0;32mI (17720) SLIDER: Value: 3[0m
+[0;32mI (17760) TOUCH: Raw: (43, 343) -> Transformed: (343, 277)[0m
+[0;32mI (17760) SLIDER: Value: 2[0m
+[0;32mI (17800) TOUCH: Raw: (44, 342) -> Transformed: (342, 276)[0m
+[0;32mI (17800) SLIDER: Value: 1[0m
+[0;32mI (17840) TOUCH: Raw: (44, 342) -> Transformed: (342, 276)[0m
+[0;32mI (17880) TOUCH: Raw: (47, 344) -> Transformed: (344, 273)[0m
+[0;32mI (17880) SLIDER: Value: 3[0m
+[0;32mI (17920) TOUCH: Raw: (54, 365) -> Transformed: (365, 266)[0m
+[0;32mI (17920) SLIDER: Value: 24[0m
+[0;32mI (17960) TOUCH: Raw: (54, 386) -> Transformed: (386, 266)[0m
+[0;32mI (17960) SLIDER: Value: 45[0m
+[0;32mI (18000) TOUCH: Raw: (53, 413) -> Transformed: (413, 267)[0m
+[0;32mI (18000) SLIDER: Value: 72[0m
+[0;32mI (18040) TOUCH: Raw: (51, 424) -> Transformed: (424, 269)[0m
+[0;32mI (18040) SLIDER: Value: 83[0m
+[0;32mI (18080) TOUCH: Raw: (50, 428) -> Transformed: (428, 270)[0m
+[0;32mI (18080) SLIDER: Value: 87[0m
+[0;32mI (18120) TOUCH: Raw: (48, 432) -> Transformed: (432, 272)[0m
+[0;32mI (18120) SLIDER: Value: 91[0m
+[0;32mI (18160) TOUCH: Raw: (47, 436) -> Transformed: (436, 273)[0m
+[0;32mI (18160) SLIDER: Value: 95[0m
+[0;32mI (18200) TOUCH: Raw: (47, 442) -> Transformed: (442, 273)[0m
+[0;32mI (18200) SLIDER: Value: 100[0m
+[0;32mI (18240) TOUCH: Raw: (47, 450) -> Transformed: (450, 273)[0m
+[0;32mI (18280) TOUCH: Raw: (47, 454) -> Transformed: (454, 273)[0m
+[0;32mI (18320) TOUCH: Raw: (47, 457) -> Transformed: (457, 273)[0m
+[0;32mI (18360) TOUCH: Raw: (47, 457) -> Transformed: (457, 273)[0m
+[0;32mI (18400) TOUCH: Raw: (47, 457) -> Transformed: (457, 273)[0m
+[0;32mI (18440) TOUCH: Raw: (41, 435) -> Transformed: (435, 279)[0m
+[0;32mI (18440) SLIDER: Value: 94[0m
+[0;32mI (18480) TOUCH: Raw: (31, 389) -> Transformed: (389, 289)[0m
+[0;32mI (18480) SLIDER: Value: 48[0m
+[0;32mI (18520) TOUCH: Raw: (28, 372) -> Transformed: (372, 292)[0m
+[0;32mI (18520) SLIDER: Value: 31[0m
+[0;32mI (18560) TOUCH: Raw: (26, 363) -> Transformed: (363, 294)[0m
+[0;32mI (18560) SLIDER: Value: 22[0m
+[0;32mI (18600) TOUCH: Raw: (26, 358) -> Transformed: (358, 294)[0m
+[0;32mI (18600) SLIDER: Value: 17[0m
+[0;32mI (18640) TOUCH: Raw: (25, 353) -> Transformed: (353, 295)[0m
+[0;32mI (18640) SLIDER: Value: 12[0m
+[0;32mI (18680) TOUCH: Raw: (23, 347) -> Transformed: (347, 297)[0m
+[0;32mI (18680) SLIDER: Value: 6[0m
+[0;32mI (18720) TOUCH: Raw: (23, 345) -> Transformed: (345, 297)[0m
+[0;32mI (18720) SLIDER: Value: 4[0m
+[0;32mI (18760) TOUCH: Raw: (23, 345) -> Transformed: (345, 297)[0m
+[0;32mI (18800) TOUCH: Raw: (23, 345) -> Transformed: (345, 297)[0m
+[0;32mI (18840) TOUCH: Raw: (23, 345) -> Transformed: (345, 297)[0m
+[0;32mI (18880) TOUCH: Raw: (23, 345) -> Transformed: (345, 297)[0m
+[0;32mI (18920) TOUCH: Raw: (23, 345) -> Transformed: (345, 297)[0m
+[0;32mI (18960) TOUCH: Raw: (24, 352) -> Transformed: (352, 296)[0m
+[0;32mI (18960) SLIDER: Value: 11[0m
+[0;32mI (19000) TOUCH: Raw: (30, 389) -> Transformed: (389, 290)[0m
+[0;32mI (19000) SLIDER: Value: 48[0m
+[0;32mI (19040) TOUCH: Raw: (35, 429) -> Transformed: (429, 285)[0m
+[0;32mI (19040) SLIDER: Value: 88[0m
+[0;32mI (19080) TOUCH: Raw: (41, 456) -> Transformed: (456, 279)[0m
+[0;32mI (19080) SLIDER: Value: 100[0m
+[0;32mI (19120) TOUCH: Raw: (44, 465) -> Transformed: (465, 276)[0m
+[0;32mI (19160) TOUCH: Raw: (45, 466) -> Transformed: (466, 275)[0m
+[0;32mI (19200) TOUCH: Raw: (45, 466) -> Transformed: (466, 275)[0m
+[0;32mI (19240) TOUCH: Raw: (45, 466) -> Transformed: (466, 275)[0m
+[0;32mI (19280) TOUCH: Raw: (45, 466) -> Transformed: (466, 275)[0m
+[0;32mI (19320) TOUCH: Raw: (45, 466) -> Transformed: (466, 275)[0m
+[0;32mI (19360) TOUCH: Raw: (45, 466) -> Transformed: (466, 275)[0m
+[0;32mI (19400) TOUCH: Raw: (45, 466) -> Transformed: (466, 275)[0m
+[0;32mI (19440) TOUCH: Raw: (44, 465) -> Transformed: (465, 276)[0m
+[0;32mI (19480) TOUCH: Raw: (41, 453) -> Transformed: (453, 279)[0m
+[0;32mI (19520) TOUCH: Raw: (39, 428) -> Transformed: (428, 281)[0m
+[0;32mI (19520) SLIDER: Value: 87[0m
+[0;32mI (19560) TOUCH: Raw: (38, 411) -> Transformed: (411, 282)[0m
+[0;32mI (19560) SLIDER: Value: 70[0m
+[0;32mI (19600) TOUCH: Raw: (38, 402) -> Transformed: (402, 282)[0m
+[0;32mI (19600) SLIDER: Value: 61[0m
+[0;32mI (19640) TOUCH: Raw: (38, 398) -> Transformed: (398, 282)[0m
+[0;32mI (19640) SLIDER: Value: 57[0m
+[0;32mI (19680) TOUCH: Raw: (38, 397) -> Transformed: (397, 282)[0m
+[0;32mI (19680) SLIDER: Value: 56[0m
+[0;32mI (19720) TOUCH: Raw: (38, 397) -> Transformed: (397, 282)[0m
+[0;32mI (19760) TOUCH: Raw: (38, 397) -> Transformed: (397, 282)[0m
+[0;32mI (19800) TOUCH: Raw: (38, 397) -> Transformed: (397, 282)[0m
+[0;32mI (19840) TOUCH: Raw: (38, 397) -> Transformed: (397, 282)[0m
+[0;32mI (19880) TOUCH: Raw: (38, 397) -> Transformed: (397, 282)[0m
+[0;32mI (19920) TOUCH: Raw: (40, 397) -> Transformed: (397, 280)[0m
+[0;32mI (19960) TOUCH: Raw: (43, 398) -> Transformed: (398, 277)[0m
+[0;32mI (19960) SLIDER: Value: 57[0m
+[0;32mI (20000) TOUCH: Raw: (46, 401) -> Transformed: (401, 274)[0m
+[0;32mI (20000) SLIDER: Value: 60[0m
+[0;32mI (20040) TOUCH: Raw: (48, 403) -> Transformed: (403, 272)[0m
+[0;32mI (20040) SLIDER: Value: 62[0m
+[0;32mI (20080) TOUCH: Raw: (49, 404) -> Transformed: (404, 271)[0m
+[0;32mI (20080) SLIDER: Value: 63[0m
+[0;32mI (20120) TOUCH: Raw: (50, 404) -> Transformed: (404, 270)[0m
+[0;32mI (20160) TOUCH: Raw: (52, 404) -> Transformed: (404, 268)[0m
+[0;32mI (20200) TOUCH: Raw: (53, 404) -> Transformed: (404, 267)[0m
+[0;32mI (20240) TOUCH: Raw: (54, 404) -> Transformed: (404, 266)[0m
+[0;32mI (20280) TOUCH: Raw: (55, 404) -> Transformed: (404, 265)[0m
+[0;32mI (20320) TOUCH: Raw: (55, 402) -> Transformed: (402, 265)[0m
+[0;32mI (20320) SLIDER: Value: 61[0m
+[0;32mI (20360) TOUCH: Raw: (56, 400) -> Transformed: (400, 264)[0m
+[0;32mI (20360) SLIDER: Value: 59[0m
+[0;32mI (20400) TOUCH: Raw: (56, 399) -> Transformed: (399, 264)[0m
+[0;32mI (20400) SLIDER: Value: 58[0m
+[0;32mI (20440) TOUCH: Raw: (56, 398) -> Transformed: (398, 264)[0m
+[0;32mI (20440) SLIDER: Value: 57[0m
+[0;32mI (20480) TOUCH: Raw: (56, 396) -> Transformed: (396, 264)[0m
+[0;32mI (20480) SLIDER: Value: 55[0m
+[0;32mI (20520) TOUCH: Raw: (57, 394) -> Transformed: (394, 263)[0m
+[0;32mI (20520) SLIDER: Value: 53[0m
+[0;32mI (20560) TOUCH: Raw: (58, 392) -> Transformed: (392, 262)[0m
+[0;32mI (20560) SLIDER: Value: 51[0m
+[0;32mI (20600) TOUCH: Raw: (58, 390) -> Transformed: (390, 262)[0m
+[0;32mI (20600) SLIDER: Value: 49[0m
+[0;32mI (20640) TOUCH: Raw: (58, 389) -> Transformed: (389, 262)[0m
+[0;32mI (20640) SLIDER: Value: 48[0m
+[0;32mI (20680) TOUCH: Raw: (58, 388) -> Transformed: (388, 262)[0m
+[0;32mI (20680) SLIDER: Value: 47[0m
+[0;32mI (20720) TOUCH: Raw: (59, 388) -> Transformed: (388, 261)[0m
+[0;32mI (20760) TOUCH: Raw: (59, 388) -> Transformed: (388, 261)[0m
+[0;32mI (20800) TOUCH: Raw: (59, 388) -> Transformed: (388, 261)[0m
+[0;32mI (20840) TOUCH: Raw: (59, 388) -> Transformed: (388, 261)[0m
+[0;32mI (20880) TOUCH: Raw: (59, 388) -> Transformed: (388, 261)[0m
+[0;32mI (20920) TOUCH: Raw: (59, 388) -> Transformed: (388, 261)[0m
+[0;32mI (20960) TOUCH: Raw: (65, 391) -> Transformed: (391, 255)[0m
+[0;32mI (20960) SLIDER: Value: 50[0m
+[0;32mI (21000) TOUCH: Raw: (69, 405) -> Transformed: (405, 251)[0m
+[0;32mI (21000) SLIDER: Value: 64[0m
+[0;32mI (21040) TOUCH: Raw: (71, 416) -> Transformed: (416, 249)[0m
+[0;32mI (21040) SLIDER: Value: 75[0m
+[0;32mI (21080) TOUCH: Raw: (72, 421) -> Transformed: (421, 248)[0m
+[0;32mI (21080) SLIDER: Value: 80[0m
+[0;32mI (21120) TOUCH: Raw: (73, 424) -> Transformed: (424, 247)[0m
+[0;32mI (21120) SLIDER: Value: 83[0m
+[0;32mI (21160) TOUCH: Raw: (73, 424) -> Transformed: (424, 247)[0m
+[0;32mI (21200) TOUCH: Raw: (74, 425) -> Transformed: (425, 246)[0m
+[0;32mI (21200) SLIDER: Value: 84[0m
+[0;32mI (21240) TOUCH: Raw: (75, 426) -> Transformed: (426, 245)[0m
+[0;32mI (21240) SLIDER: Value: 85[0m
+[0;32mI (21280) TOUCH: Raw: (75, 428) -> Transformed: (428, 245)[0m
+[0;32mI (21280) SLIDER: Value: 87[0m
+[0;32mI (21320) TOUCH: Raw: (75, 428) -> Transformed: (428, 245)[0m
+[0;32mI (21360) TOUCH: Raw: (75, 429) -> Transformed: (429, 245)[0m
+[0;32mI (21360) SLIDER: Value: 88[0m
+[0;32mI (21400) TOUCH: Raw: (75, 429) -> Transformed: (429, 245)[0m
+[0;32mI (21440) TOUCH: Raw: (75, 429) -> Transformed: (429, 245)[0m
+[0;32mI (21480) TOUCH: Raw: (75, 429) -> Transformed: (429, 245)[0m
+[0;32mI (21520) TOUCH: Raw: (75, 429) -> Transformed: (429, 245)[0m
+[0;32mI (21560) TOUCH: Raw: (75, 429) -> Transformed: (429, 245)[0m
+[0;32mI (21600) TOUCH: Raw: (73, 422) -> Transformed: (422, 247)[0m
+[0;32mI (21600) SLIDER: Value: 81[0m
+[0;32mI (21640) TOUCH: Raw: (70, 409) -> Transformed: (409, 250)[0m
+[0;32mI (21640) SLIDER: Value: 68[0m
+[0;32mI (21680) TOUCH: Raw: (68, 394) -> Transformed: (394, 252)[0m
+[0;32mI (21680) SLIDER: Value: 53[0m
+[0;32mI (21720) TOUCH: Raw: (67, 387) -> Transformed: (387, 253)[0m
+[0;32mI (21720) SLIDER: Value: 46[0m
+[0;32mI (21760) TOUCH: Raw: (67, 385) -> Transformed: (385, 253)[0m
+[0;32mI (21760) SLIDER: Value: 44[0m
+[0;32mI (21800) TOUCH: Raw: (67, 385) -> Transformed: (385, 253)[0m
+[0;32mI (21840) TOUCH: Raw: (67, 384) -> Transformed: (384, 253)[0m
+[0;32mI (21840) SLIDER: Value: 43[0m
+[0;32mI (21880) TOUCH: Raw: (67, 383) -> Transformed: (383, 253)[0m
+[0;32mI (21880) SLIDER: Value: 42[0m
+[0;32mI (21920) TOUCH: Raw: (67, 380) -> Transformed: (380, 253)[0m
+[0;32mI (21920) SLIDER: Value: 39[0m
+[0;32mI (21960) TOUCH: Raw: (67, 378) -> Transformed: (378, 253)[0m
+[0;32mI (21960) SLIDER: Value: 37[0m
+[0;32mI (22000) TOUCH: Raw: (67, 377) -> Transformed: (377, 253)[0m
+[0;32mI (22000) SLIDER: Value: 36[0m
+[0;32mI (22040) TOUCH: Raw: (67, 376) -> Transformed: (376, 253)[0m
+[0;32mI (22040) SLIDER: Value: 35[0m
+[0;32mI (22080) TOUCH: Raw: (67, 374) -> Transformed: (374, 253)[0m
+[0;32mI (22080) SLIDER: Value: 33[0m
+[0;32mI (22120) TOUCH: Raw: (67, 374) -> Transformed: (374, 253)[0m
+[0;32mI (22160) TOUCH: Raw: (67, 374) -> Transformed: (374, 253)[0m
+[0;32mI (22200) TOUCH: Raw: (67, 374) -> Transformed: (374, 253)[0m
+[0;32mI (22240) TOUCH: Raw: (67, 374) -> Transformed: (374, 253)[0m
+[0;32mI (22280) TOUCH: Raw: (67, 374) -> Transformed: (374, 253)[0m
+[0;32mI (22320) TOUCH: Raw: (67, 374) -> Transformed: (374, 253)[0m
+[0;32mI (22360) TOUCH: Raw: (67, 374) -> Transformed: (374, 253)[0m
+[0;32mI (22400) TOUCH: Raw: (67, 374) -> Transformed: (374, 253)[0m
+[0;32mI (22440) TOUCH: Raw: (67, 374) -> Transformed: (374, 253)[0m
+[0;32mI (22480) TOUCH: Raw: (67, 374) -> Transformed: (374, 253)[0m
+[0;32mI (22520) TOUCH: Raw: (67, 374) -> Transformed: (374, 253)[0m
+[0;32mI (22560) TOUCH: Raw: (67, 374) -> Transformed: (374, 253)[0m
+[0;32mI (22600) TOUCH: Raw: (67, 375) -> Transformed: (375, 253)[0m
+[0;32mI (22600) SLIDER: Value: 34[0m
+[0;32mI (22640) TOUCH: Raw: (67, 379) -> Transformed: (379, 253)[0m
+[0;32mI (22640) SLIDER: Value: 38[0m
+[0;32mI (22680) TOUCH: Raw: (67, 380) -> Transformed: (380, 253)[0m
+[0;32mI (22680) SLIDER: Value: 39[0m
+[0;32mI (22720) TOUCH: Raw: (67, 381) -> Transformed: (381, 253)[0m
+[0;32mI (22720) SLIDER: Value: 40[0m
+[0;32mI (22760) TOUCH: Raw: (67, 381) -> Transformed: (381, 253)[0m
+[0;32mI (22800) TOUCH: Raw: (67, 381) -> Transformed: (381, 253)[0m
+[0;32mI (22840) TOUCH: Raw: (67, 381) -> Transformed: (381, 253)[0m
+[0;32mI (22880) TOUCH: Raw: (67, 381) -> Transformed: (381, 253)[0m
+[0;32mI (22920) TOUCH: Raw: (67, 382) -> Transformed: (382, 253)[0m
+[0;32mI (22920) SLIDER: Value: 41[0m
+[0;32mI (22960) TOUCH: Raw: (67, 382) -> Transformed: (382, 253)[0m
+[0;32mI (23000) TOUCH: Raw: (67, 383) -> Transformed: (383, 253)[0m
+[0;32mI (23000) SLIDER: Value: 42[0m
+[0;32mI (23040) TOUCH: Raw: (67, 385) -> Transformed: (385, 253)[0m
+[0;32mI (23040) SLIDER: Value: 44[0m
+[0;32mI (23080) TOUCH: Raw: (67, 389) -> Transformed: (389, 253)[0m
+[0;32mI (23080) SLIDER: Value: 48[0m
+[0;32mI (23120) TOUCH: Raw: (67, 390) -> Transformed: (390, 253)[0m
+[0;32mI (23120) SLIDER: Value: 49[0m
+[0;32mI (23160) TOUCH: Raw: (67, 390) -> Transformed: (390, 253)[0m
+[0;32mI (23200) TOUCH: Raw: (67, 390) -> Transformed: (390, 253)[0m
+[0;32mI (23240) TOUCH: Raw: (67, 390) -> Transformed: (390, 253)[0m
+[0;32mI (23280) TOUCH: Raw: (67, 390) -> Transformed: (390, 253)[0m
+[0;32mI (23320) TOUCH: Raw: (67, 391) -> Transformed: (391, 253)[0m
+[0;32mI (23320) SLIDER: Value: 50[0m
+[0;32mI (23360) TOUCH: Raw: (67, 392) -> Transformed: (392, 253)[0m
+[0;32mI (23360) SLIDER: Value: 51[0m
+[0;32mI (23400) TOUCH: Raw: (67, 393) -> Transformed: (393, 253)[0m
+[0;32mI (23400) SLIDER: Value: 52[0m
+[0;32mI (23440) TOUCH: Raw: (67, 393) -> Transformed: (393, 253)[0m
+[0;32mI (23480) TOUCH: Raw: (67, 393) -> Transformed: (393, 253)[0m
+[0;32mI (23520) TOUCH: Raw: (67, 393) -> Transformed: (393, 253)[0m
+[0;32mI (23560) TOUCH: Raw: (67, 393) -> Transformed: (393, 253)[0m
+[0;32mI (23600) TOUCH: Raw: (67, 393) -> Transformed: (393, 253)[0m
+[0;32mI (24240) TOUCH: Raw: (156, 428) -> Transformed: (428, 164)[0m
+[0;32mI (24240) GRID: Button 8 pressed[0m
+[0;32mI (24280) TOUCH: Raw: (156, 428) -> Transformed: (428, 164)[0m
+[0;32mI (24320) TOUCH: Raw: (156, 428) -> Transformed: (428, 164)[0m
+[0;32mI (24360) TOUCH: Raw: (156, 428) -> Transformed: (428, 164)[0m
+[0;32mI (24400) GRID: Button 8 released[0m
+[0;32mI (25280) TOUCH: Raw: (149, 442) -> Transformed: (442, 171)[0m
+[0;32mI (25280) GRID: Button 8 pressed[0m
+[0;32mI (25320) TOUCH: Raw: (149, 442) -> Transformed: (442, 171)[0m
+[0;32mI (25360) TOUCH: Raw: (149, 442) -> Transformed: (442, 171)[0m
+[0;32mI (25400) GRID: Button 8 released[0m
+[0;32mI (25680) TOUCH: Raw: (153, 434) -> Transformed: (434, 167)[0m
+[0;32mI (25680) GRID: Button 8 pressed[0m
+[0;32mI (25720) TOUCH: Raw: (153, 434) -> Transformed: (434, 167)[0m
+[0;32mI (25760) TOUCH: Raw: (153, 434) -> Transformed: (434, 167)[0m
+[0;32mI (25800) GRID: Button 8 released[0m
+[0;32mI (26640) TOUCH: Raw: (153, 442) -> Transformed: (442, 167)[0m
+[0;32mI (26640) GRID: Button 8 pressed[0m
+[0;32mI (26680) TOUCH: Raw: (153, 442) -> Transformed: (442, 167)[0m
+[0;32mI (26720) TOUCH: Raw: (153, 442) -> Transformed: (442, 167)[0m
+[0;32mI (26760) GRID: Button 8 released[0m
+[0;32mI (26880) TOUCH: Raw: (146, 437) -> Transformed: (437, 174)[0m
+[0;32mI (26880) GRID: Button 8 pressed[0m
+[0;32mI (26920) TOUCH: Raw: (146, 437) -> Transformed: (437, 174)[0m
+[0;32mI (26960) GRID: Button 8 released[0m
+[0;32mI (27560) TOUCH: Raw: (140, 431) -> Transformed: (431, 180)[0m
+[0;32mI (27560) GRID: Button 8 pressed[0m
+[0;32mI (27600) TOUCH: Raw: (140, 431) -> Transformed: (431, 180)[0m
+[0;32mI (27640) TOUCH: Raw: (140, 431) -> Transformed: (431, 180)[0m
+[0;32mI (27680) GRID: Button 8 released[0m
+[0;32mI (27960) TOUCH: Raw: (141, 416) -> Transformed: (416, 179)[0m
+[0;32mI (27960) GRID: Button 8 pressed[0m
+[0;32mI (28000) TOUCH: Raw: (141, 416) -> Transformed: (416, 179)[0m
+[0;32mI (28040) TOUCH: Raw: (141, 416) -> Transformed: (416, 179)[0m
+[0;32mI (28080) TOUCH: Raw: (141, 416) -> Transformed: (416, 179)[0m
+[0;32mI (28120) GRID: Button 8 released[0m
+[0;32mI (28440) TOUCH: Raw: (151, 433) -> Transformed: (433, 169)[0m
+[0;32mI (28440) GRID: Button 8 pressed[0m
+[0;32mI (28480) TOUCH: Raw: (151, 433) -> Transformed: (433, 169)[0m
+[0;32mI (28520) TOUCH: Raw: (151, 433) -> Transformed: (433, 169)[0m
+[0;32mI (28560) TOUCH: Raw: (151, 433) -> Transformed: (433, 169)[0m
+[0;32mI (28600) GRID: Button 8 released[0m
+[0;32mI (29240) TOUCH: Raw: (146, 431) -> Transformed: (431, 174)[0m
+[0;32mI (29240) GRID: Button 8 pressed[0m
+[0;32mI (29280) TOUCH: Raw: (146, 431) -> Transformed: (431, 174)[0m
+[0;32mI (29320) TOUCH: Raw: (146, 431) -> Transformed: (431, 174)[0m
+[0;32mI (29360) TOUCH: Raw: (146, 431) -> Transformed: (431, 174)[0m
+[0;32mI (29400) GRID: Button 8 released[0m
+[0;32mI (30280) TOUCH: Raw: (153, 439) -> Transformed: (439, 167)[0m
+[0;32mI (30280) GRID: Button 8 pressed[0m
+[0;32mI (30320) TOUCH: Raw: (153, 439) -> Transformed: (439, 167)[0m
+[0;32mI (30360) TOUCH: Raw: (153, 439) -> Transformed: (439, 167)[0m
+[0;32mI (30400) GRID: Button 8 released[0m
+[0;32mI (30760) TOUCH: Raw: (139, 419) -> Transformed: (419, 181)[0m
+[0;32mI (30760) GRID: Button 8 pressed[0m
+[0;32mI (30800) TOUCH: Raw: (139, 419) -> Transformed: (419, 181)[0m
+[0;32mI (30840) TOUCH: Raw: (139, 419) -> Transformed: (419, 181)[0m
+[0;32mI (30880) TOUCH: Raw: (139, 419) -> Transformed: (419, 181)[0m
+[0;32mI (30920) GRID: Button 8 released[0m
+[0;32mI (31320) TOUCH: Raw: (142, 428) -> Transformed: (428, 178)[0m
+[0;32mI (31320) GRID: Button 8 pressed[0m
+[0;32mI (31360) TOUCH: Raw: (142, 428) -> Transformed: (428, 178)[0m
+[0;32mI (31400) TOUCH: Raw: (142, 428) -> Transformed: (428, 178)[0m
+[0;32mI (31440) GRID: Button 8 released[0m

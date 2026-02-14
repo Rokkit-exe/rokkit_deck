@@ -1,0 +1,87 @@
+Command: /home/frank/.espressif/python_env/idf5.5_py3.14_env/bin/python /opt/esp-idf/tools/idf_monitor.py -p /dev/ttyACM0 -b 115200 --toolchain-prefix xtensa-esp32s3-elf- --target esp32s3 --revision 0 /home/frank/coding/esp32/rokkit-deck/build/rokkit-deck.elf /home/frank/coding/esp32/rokkit-deck/build/bootloader/bootloader.elf -m '/home/frank/.espressif/python_env/idf5.5_py3.14_env/bin/python' '/opt/esp-idf/tools/idf.py' '-p' '/dev/ttyACM0'
+ �
+B���J*��}������ segment 3: paddr=00030020 vaddr=42000020 size=57eESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x1 (POWERON),boot:0x8 (SPI_FAST_FLASH_BOOT)
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x158c
+load:0x403c8700,len:0xd24
+load:0x403cb700,len:0x2f34
+entry 0x403c8924
+[0;32mI (24) boot: ESP-IDF HEAD-HASH-NOTFOUND 2nd stage bootloader[0m
+[0;32mI (25) boot: compile time Feb 14 2026 11:29:13[0m
+[0;32mI (25) boot: Multicore bootloader[0m
+[0;32mI (26) boot: chip revision: v0.2[0m
+[0;32mI (29) boot: efuse block revision: v1.3[0m
+[0;32mI (32) boot.esp32s3: Boot SPI Speed : 80MHz[0m
+[0;32mI (36) boot.esp32s3: SPI Mode       : DIO[0m
+[0;32mI (40) boot.esp32s3: SPI Flash Size : 8MB[0m
+[0;32mI (44) boot: Enabling RNG early entropy source...[0m
+[0;32mI (48) boot: Partition Table:[0m
+[0;32mI (51) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (70) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (77) boot: End of partition table[0m
+[0;32mI (80) esp_image: segment 0: paddr=00010020 vaddr=3c060020 size=140fch ( 82172) map[0m
+[0;32mI (102) esp_image: segment 1: paddr=00024124 vaddr=3fc95600 size=02cd4h ( 11476) load[0m
+[0;32mI (105) esp_image: segment 2: paddr=00026e00 vaddr=40374000 size=09218h ( 37400) load[0m
+[0;32mI (114) esp_image: segment 3: paddr=00030020 vaddr=42000020 size=57ebch (360124) map[0m
+[0;32mI (178) esp_image: segment 4: paddr=00087ee4 vaddr=4037d218 size=08324h ( 33572) load[0m
+[0;32mI (185) esp_image: segment 5: paddr=00090210 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (192) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (192) boot: Disabling RNG early entropy source...[0m
+[0;32mI (204) cpu_start: Multicore app[0m
+[0;32mI (212) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (213) cpu_start: Pro cpu start user code[0m
+[0;32mI (213) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (214) app_init: Application information:[0m
+[0;32mI (218) app_init: Project name:     rokkit-deck[0m
+[0;32mI (222) app_init: App version:      ed8b921-dirty[0m
+[0;32mI (227) app_init: Compile time:     Feb 14 2026 11:29:06[0m
+[0;32mI (232) app_init: ELF file SHA256:  779631133...[0m
+[0;32mI (236) app_init: ESP-IDF:          HEAD-HASH-NOTFOUND[0m
+[0;32mI (241) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (245) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (249) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (253) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (259) heap_init: At 3FCBDF98 len 0002B778 (173 KiB): RAM[0m
+[0;32mI (264) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (269) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (275) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM[0m
+[0;32mI (281) spi_flash: detected chip: generic[0m
+[0;32mI (284) spi_flash: flash io: dio[0m
+[0;32mI (287) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (293) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (300) main_task: Started on CPU0[0m
+[0;32mI (340) main_task: Calling app_main()[0m
+[0;32mI (340) st7796: version: 1.4.0[0m
+[0;32mI (340) st7796_general: LCD panel create success, version: 1.4.0[0m
+[0;32mI (570) MAIN: ✓ LCD panel initialized[0m
+[0;32mI (1000) GT911: TouchPad_ID:0x39,0x31,0x31[0m
+[0;32mI (1000) GT911: TouchPad_Config_Version:255[0m
+[0;32mI (1000) GT911: ✓ GT911 driver initialized successfully[0m
+[0;32mI (1000) MAIN: ✓ Touch initialized[0m
+[0;32mI (1010) LVGL: PARTIAL mode: 480x320, buffer: 43200 bytes (32 lines)[0m
+[0;32mI (1010) MAIN: ✓ Touch registered with LVGL[0m
+[0;32mI (1050) GRID: Created 4x2 button grid + 3 sliders[0m
+[0;32mI (1050) LVGL: Timer task started[0m
+[0;32mI (1180) MAIN: ✓ System initialized[0m
+[0;32mI (4280) TOUCH: Raw: (160, 297) -> Transformed: (297, 160)[0m
+[0;32mI (4320) TOUCH: Raw: (160, 297) -> Transformed: (297, 160)[0m
+[0;32mI (4360) TOUCH: Raw: (160, 297) -> Transformed: (297, 160)[0m
+[0;32mI (4400) GRID: Button 7 clicked[0m
+[0;32mI (7360) TOUCH: Raw: (142, 406) -> Transformed: (406, 178)[0m
+[0;32mI (7400) TOUCH: Raw: (142, 406) -> Transformed: (406, 178)[0m
+[0;32mI (7440) TOUCH: Raw: (142, 406) -> Transformed: (406, 178)[0m
+[0;32mI (7480) TOUCH: Raw: (142, 406) -> Transformed: (406, 178)[0m
+[0;32mI (7520) GRID: Button 8 clicked[0m
+[0;32mI (9720) TOUCH: Raw: (259, 410) -> Transformed: (410, 61)[0m
+[0;32mI (9760) TOUCH: Raw: (259, 410) -> Transformed: (410, 61)[0m
+[0;32mI (9800) TOUCH: Raw: (259, 410) -> Transformed: (410, 61)[0m
+[0;32mI (9840) GRID: Button 4 clicked[0m
+[0;32mI (11400) TOUCH: Raw: (248, 298) -> Transformed: (298, 72)[0m
+[0;32mI (11440) TOUCH: Raw: (248, 298) -> Transformed: (298, 72)[0m
+[0;32mI (11480) TOUCH: Raw: (248, 298) -> Transformed: (298, 72)[0m
+[0;32mI (11520) GRID: Button 3 clicked[0m
