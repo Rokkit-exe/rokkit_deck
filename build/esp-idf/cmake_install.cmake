@@ -574,6 +574,16 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+  include("/home/frank/coding/esp32/rokkit-deck/build/esp-idf/espressif__esp_lcd_touch/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/frank/coding/esp32/rokkit-deck/build/esp-idf/espressif__esp_lcd_touch_gt911/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
   include("/home/frank/coding/esp32/rokkit-deck/build/esp-idf/espressif__cmake_utilities/cmake_install.cmake")
 endif()
 
@@ -584,17 +594,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/frank/coding/esp32/rokkit-deck/build/esp-idf/st7796_lcd/cmake_install.cmake")
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("/home/frank/coding/esp32/rokkit-deck/build/esp-idf/espressif__esp_lcd_touch/cmake_install.cmake")
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("/home/frank/coding/esp32/rokkit-deck/build/esp-idf/espressif__esp_lcd_touch_gt911/cmake_install.cmake")
+  include("/home/frank/coding/esp32/rokkit-deck/build/esp-idf/waveshare_lcd/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)

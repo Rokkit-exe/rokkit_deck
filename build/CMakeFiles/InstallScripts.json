@@ -123,11 +123,11 @@
 		"/home/frank/coding/esp32/rokkit-deck/build/esp-idf/wifi_provisioning/cmake_install.cmake",
 		"/home/frank/coding/esp32/rokkit-deck/build/esp-idf/lvgl__lvgl/cmake_install.cmake",
 		"/home/frank/coding/esp32/rokkit-deck/build/esp-idf/deck_gl/cmake_install.cmake",
-		"/home/frank/coding/esp32/rokkit-deck/build/esp-idf/espressif__cmake_utilities/cmake_install.cmake",
-		"/home/frank/coding/esp32/rokkit-deck/build/esp-idf/espressif__esp_lcd_st7796/cmake_install.cmake",
-		"/home/frank/coding/esp32/rokkit-deck/build/esp-idf/st7796_lcd/cmake_install.cmake",
 		"/home/frank/coding/esp32/rokkit-deck/build/esp-idf/espressif__esp_lcd_touch/cmake_install.cmake",
 		"/home/frank/coding/esp32/rokkit-deck/build/esp-idf/espressif__esp_lcd_touch_gt911/cmake_install.cmake",
+		"/home/frank/coding/esp32/rokkit-deck/build/esp-idf/espressif__cmake_utilities/cmake_install.cmake",
+		"/home/frank/coding/esp32/rokkit-deck/build/esp-idf/espressif__esp_lcd_st7796/cmake_install.cmake",
+		"/home/frank/coding/esp32/rokkit-deck/build/esp-idf/waveshare_lcd/cmake_install.cmake",
 		"/home/frank/coding/esp32/rokkit-deck/build/esp-idf/main/cmake_install.cmake"
 	],
 	"Parallel" : false

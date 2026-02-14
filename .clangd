@@ -12,6 +12,8 @@ CompileFlags:
     - -I/opt/esp-idf/components/freertos/esp_additions/include
     - -I/opt/esp-idf/components/esp_common/include
     - -I/opt/esp-idf/components/esp_lcd/include
+    - -I/opt/esp-idf/components/esp_system/include
+    - -I/opt/esp-idf/components/esp_timer/include
   CompilationDatabase: build/
 
 Diagnostics:
