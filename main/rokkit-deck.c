@@ -16,6 +16,7 @@
 #include "freertos/semphr.h"
 #include "freertos/task.h"
 #include "lvgl.h"
+#include "lvgl_driver.h"
 #include <stdint.h>
 #include <stdio.h>
 
@@ -57,10 +58,8 @@ static bsp_handles_t handles = {
     .lcd_height = LCD_VER_RES,
 };
 
-// ✅ LVGL tick increment - called from timer ISR
 static void lvgl_tick_inc_cb(void *arg) { lv_tick_inc(10); }
 
-// ✅ LVGL timer task with mutex protection
 static void lvgl_timer_task(void *arg) {
   ESP_LOGI("LVGL", "Timer task started");
   while (1) {
@@ -69,37 +68,6 @@ static void lvgl_timer_task(void *arg) {
   }
 }
 
-// ✅ Fixed touchpad read callback with coordinate transformation
-static void touchpad_read(lv_indev_t *indev, lv_indev_data_t *data) {
-  if (handles.touch_panel == NULL) {
-    data->state = LV_INDEV_STATE_RELEASED;
-    return;
-  }
-
-  esp_lcd_touch_read_data(handles.touch_panel);
-
-  uint16_t touch_x[1];
-  uint16_t touch_y[1];
-  uint16_t touch_strength[1];
-  uint8_t touch_count = 0;
-
-  bool touched = esp_lcd_touch_get_coordinates(
-      handles.touch_panel, touch_x, touch_y, touch_strength, &touch_count, 1);
-
-  if (touched && touch_count > 0) {
-    uint16_t raw_x = touch_x[0];
-    uint16_t raw_y = touch_y[0];
-
-    data->point.x = raw_y;
-    data->point.y = LCD_VER_RES - raw_x;
-
-    data->state = LV_INDEV_STATE_PRESSED;
-    ESP_LOGI("TOUCH", "Raw: (%d, %d) -> Transformed: (%d, %d)", raw_x, raw_y,
-             data->point.x, data->point.y);
-  } else {
-    data->state = LV_INDEV_STATE_RELEASED;
-  }
-}
 void app_main(void) {
 
   esp_err_t err = bsp_init(&lcd_config, &handles);
@@ -115,22 +83,12 @@ void app_main(void) {
   lcd_set_orientation(&handles.lcd_panel, INVERTED_LANDSCAPE);
   vTaskDelay(pdMS_TO_TICKS(100));
 
-  deck_config_t deck_cfg = {
-      .io_handle = handles.lcd_io,
-      .panel_handle = handles.lcd_panel,
-      .hor_res = LCD_HOR_RES,
-      .ver_res = LCD_VER_RES,
-  };
-  DeckGL *deck = init_deck_display(&deck_cfg, handles.lcd_io);
+  lv_init();
 
-  if (handles.touch_panel != NULL) {
-    lv_indev_t *indev = lv_indev_create();
-    lv_indev_set_type(indev, LV_INDEV_TYPE_POINTER);
-    lv_indev_set_read_cb(indev, touchpad_read);
-    ESP_LOGI("MAIN", "✓ Touch registered with LVGL");
-  }
+  lvgl_create_display(handles.lcd_panel, LCD_HOR_RES, LCD_VER_RES);
+  lvgl_create_touch(handles.touch_panel, LCD_HOR_RES, LCD_VER_RES);
 
-  deck_create_ui(deck);
+  deck_create_ui();
 
   const esp_timer_create_args_t tick_timer_args = {
       .callback = &lvgl_tick_inc_cb,
@@ -141,13 +99,7 @@ void app_main(void) {
   ESP_ERROR_CHECK(esp_timer_create(&tick_timer_args, &tick_timer));
   ESP_ERROR_CHECK(esp_timer_start_periodic(tick_timer, 10 * 1000)); // 10ms
 
-  // ✅ Create LVGL timer task
   xTaskCreate(lvgl_timer_task, "lvgl", 6144, NULL, 4, NULL);
 
   ESP_LOGI("MAIN", "✓ System initialized");
-
-  // Main loop
-  while (1) {
-    vTaskDelay(pdMS_TO_TICKS(5000));
-  }
 }

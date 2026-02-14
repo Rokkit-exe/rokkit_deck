@@ -27,48 +27,6 @@
 #define RED 0x00FF00
 #define GREEN 0x0000FF
 
-static void lvgl_flush_cb(lv_display_t *disp, const lv_area_t *area,
-                          uint8_t *px_map) {
-  esp_lcd_panel_handle_t panel =
-      (esp_lcd_panel_handle_t)lv_display_get_user_data(disp);
-
-  // ✅ Don't add +1 to x2/y2 (they're already inclusive in LVGL 9.x)
-  esp_lcd_panel_draw_bitmap(panel, area->x1, area->y1, area->x2 + 1,
-                            area->y2 + 1, px_map);
-
-  lv_display_flush_ready(disp);
-}
-
-DeckGL *init_deck_display(deck_config_t *cfg,
-                          esp_lcd_panel_io_handle_t panel_io) {
-  lv_init();
-
-  lv_display_t *disp = lv_display_create(cfg->hor_res, cfg->ver_res);
-  lv_display_set_color_format(disp, LV_COLOR_FORMAT_RGB565);
-
-  // Two smaller buffers for smoother rendering
-  static lv_color_t buf1[480 * 30]; // ~19KB
-  static lv_color_t buf2[480 * 30]; // ~19KB
-
-  lv_display_set_buffers(disp, buf1, buf2, sizeof(buf1),
-                         LV_DISPLAY_RENDER_MODE_PARTIAL);
-
-  lv_display_set_user_data(disp, cfg->panel_handle);
-  lv_display_set_flush_cb(disp, lvgl_flush_cb);
-
-  DeckGL *deck = calloc(1, sizeof(DeckGL));
-  deck->buffer_size = sizeof(buf1);
-  deck->draw_buffer = buf1;
-  deck->display = disp;
-  deck->hor_res = cfg->hor_res;
-  deck->ver_res = cfg->ver_res;
-
-  ESP_LOGI("LVGL", "PARTIAL mode: %dx%d, buffer: %d bytes (%d lines)",
-           cfg->hor_res, cfg->ver_res, sizeof(buf1), 32);
-
-  return deck;
-}
-
 // Button click handler
 static void grid_button_pressed_event_cb(lv_event_t *e) {
   lv_obj_t *btn = lv_event_get_target(e);
@@ -199,7 +157,7 @@ static void create_slider_grid(lv_obj_t *scr) {
   }
 }
 
-void deck_create_ui(DeckGL *deck) {
+void deck_create_ui(void) {
   lv_obj_t *scr = lv_screen_active();
 
   lv_obj_set_style_bg_color(scr, lv_color_hex(BLACK), LV_PART_MAIN);
