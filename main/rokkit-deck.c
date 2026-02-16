@@ -90,6 +90,10 @@ void app_main(void) {
 
   deck_create_ui();
 
+  update_slider_value(0, 30);
+  update_slider_value(1, 70);
+  update_slider_value(2, 90);
+
   const esp_timer_create_args_t tick_timer_args = {
       .callback = &lvgl_tick_inc_cb,
       .name = "lvgl_tick",
