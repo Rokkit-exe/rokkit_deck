@@ -1,5 +1,6 @@
 #include "bsp_waveshare.h"
 #include "deck_gl.h"
+#include "deck_hid.h"
 #include "driver/gpio.h"
 #include "driver/spi_master.h"
 #include "esp_err.h"
@@ -88,6 +89,9 @@ void app_main(void) {
   lvgl_create_display(handles.lcd_panel, LCD_HOR_RES, LCD_VER_RES);
   lvgl_create_touch(handles.touch_panel, LCD_HOR_RES, LCD_VER_RES);
 
+  ESP_LOGI("MAIN", "✓ LVGL display and touch drivers initialized");
+  deck_hid_init();
+  ESP_LOGI("MAIN", "✓ HID device initialized");
   deck_create_ui();
 
   update_slider_value(0, 30);

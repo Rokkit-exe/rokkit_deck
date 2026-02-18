@@ -14,6 +14,9 @@ CompileFlags:
     - -I/opt/esp-idf/components/esp_lcd/include
     - -I/opt/esp-idf/components/esp_system/include
     - -I/opt/esp-idf/components/esp_timer/include
+    - -I/opt/esp-idf/components/tinyusb/include
+    - -I/opt/esp-idf/components/hal/include
+    - -I/opt/esp-idf/components/usb/include
   CompilationDatabase: build/
 
 Diagnostics:

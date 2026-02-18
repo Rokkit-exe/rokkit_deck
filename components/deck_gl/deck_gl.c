@@ -1,5 +1,6 @@
 #include "deck_gl.h"
 #include "core/lv_obj_style.h"
+#include "deck_hid.h"
 #include "display/lv_display.h"
 #include "esp_lcd_panel_io.h"
 #include "esp_lcd_panel_ops.h"
@@ -19,6 +20,7 @@
 #include "misc/lv_event.h"
 #include "misc/lv_types.h"
 #include "tick/lv_tick.h"
+#include "widgets/label/lv_label.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
@@ -30,35 +32,64 @@
 #define GREEN 0x0000FF
 
 ui_context_t ui_ctx;
-
-// Button click handler
-static void grid_button_pressed_event_cb(lv_event_t *e) {
+static int slider_indices[] = {0, 1, 2};
+static void grid_button_clicked_event_cb(lv_event_t *e) {
   lv_obj_t *btn = lv_event_get_target(e);
   int btn_id = (int)lv_event_get_user_data(e);
-  ESP_LOGI("GRID", "Button %d pressed", btn_id);
+  ESP_LOGI("GRID", "Button %d clicked", btn_id);
+
+  deck_input_report_t report = {0};
+  report.buttons =
+      (1 << (btn_id - 1)); // Set the bit corresponding to the button ID
+  report.slider1 = ui_ctx.slider_value_labels[0]
+                       ? atoi(lv_label_get_text(ui_ctx.slider_value_labels[0]))
+                       : 0;
+  report.slider2 = ui_ctx.slider_value_labels[1]
+                       ? atoi(lv_label_get_text(ui_ctx.slider_value_labels[1]))
+                       : 0;
+  report.slider3 = ui_ctx.slider_value_labels[2]
+                       ? atoi(lv_label_get_text(ui_ctx.slider_value_labels[2]))
+                       : 0;
+  deck_hid_send_state(&report);
 
   // Visual feedback - flash the button
   lv_obj_set_style_bg_color(btn, lv_color_hex(GREEN), LV_PART_MAIN);
-}
-
-static void grid_button_release_event_cb(lv_event_t *e) {
-  lv_obj_t *btn = lv_event_get_target(e);
-  int btn_id = (int)lv_event_get_user_data(e);
-  ESP_LOGI("GRID", "Button %d released", btn_id);
-
-  // Visual feedback - flash the button
+  lv_obj_invalidate(btn);
+  vTaskDelay(pdMS_TO_TICKS(100));
   lv_obj_set_style_bg_color(btn, lv_color_hex(BLUE), LV_PART_MAIN);
   lv_obj_invalidate(btn);
 }
 
-// Slider event handler
 static void slider_event_cb(lv_event_t *e) {
   lv_obj_t *slider = lv_event_get_target(e);
-  lv_obj_t *label = (lv_obj_t *)lv_event_get_user_data(e);
-  int value = lv_slider_get_value(slider);
+  int *index = (int *)lv_event_get_user_data(e);
+  if (index == NULL)
+    return;
 
-  lv_label_set_text_fmt(label, "%d", value);
-  ESP_LOGI("SLIDER", "Value: %d", value);
+  int idx = *index;
+  int value = lv_slider_get_value(slider);
+  char value_text[8];
+  snprintf(value_text, sizeof(value_text), "%d", value);
+  lv_label_set_text(ui_ctx.slider_value_labels[idx], value_text);
+
+  // Build report from stored values
+  deck_input_report_t report = {0};
+  report.slider1 =
+      idx == 0 ? value
+               : (ui_ctx.slider_value_labels[0]
+                      ? atoi(lv_label_get_text(ui_ctx.slider_value_labels[0]))
+                      : 0);
+  report.slider2 =
+      idx == 1 ? value
+               : (ui_ctx.slider_value_labels[1]
+                      ? atoi(lv_label_get_text(ui_ctx.slider_value_labels[1]))
+                      : 0);
+  report.slider3 =
+      idx == 2 ? value
+               : (ui_ctx.slider_value_labels[2]
+                      ? atoi(lv_label_get_text(ui_ctx.slider_value_labels[2]))
+                      : 0);
+  deck_hid_send_state(&report);
 }
 
 static lv_obj_t *create_label(lv_obj_t *parent, label_t *cfg) {
@@ -83,9 +114,7 @@ static lv_obj_t *create_button(lv_obj_t *parent, button_t *cfg) {
 
   ui_ctx.btn_labels[cfg->id - 1] = label;
   lv_obj_center(label);
-  lv_obj_add_event_cb(btn, grid_button_pressed_event_cb, LV_EVENT_PRESSED,
-                      (void *)cfg->id);
-  lv_obj_add_event_cb(btn, grid_button_release_event_cb, LV_EVENT_RELEASED,
+  lv_obj_add_event_cb(btn, grid_button_clicked_event_cb, LV_EVENT_CLICKED,
                       (void *)cfg->id);
   return btn;
 }
@@ -207,7 +236,7 @@ static void create_slider_grid(lv_obj_t *scr) {
     ui_ctx.slider_value_labels[i] = value_label;
     ui_ctx.sliders[i] = slider;
     lv_obj_add_event_cb(slider, slider_event_cb, LV_EVENT_VALUE_CHANGED,
-                        value_label);
+                        &slider_indices[i]);
   }
 }
 
