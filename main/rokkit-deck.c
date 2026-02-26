@@ -18,6 +18,7 @@
 #include "freertos/task.h"
 #include "lvgl.h"
 #include "lvgl_driver.h"
+#include "tusb.h"
 #include <stdint.h>
 #include <stdio.h>
 
@@ -69,6 +70,21 @@ static void lvgl_timer_task(void *arg) {
   }
 }
 
+static void usb_task(void *arg) {
+  ESP_LOGI("USB", "USB task started");
+  while (1) {
+    if (!tud_cdc_connected()) {
+      ESP_LOGW("USB", "CDC device not connected");
+      vTaskDelay(pdMS_TO_TICKS(500));
+    } else {
+      ESP_LOGI("USB", "CDC device connected");
+      deck_cdc_read_task(
+          NULL); // This will block until the device is disconnected
+      vTaskDelay(pdMS_TO_TICKS(10));
+    }
+  }
+}
+
 void app_main(void) {
 
   esp_err_t err = bsp_init(&lcd_config, &handles);
@@ -90,13 +106,9 @@ void app_main(void) {
   lvgl_create_touch(handles.touch_panel, LCD_HOR_RES, LCD_VER_RES);
 
   ESP_LOGI("MAIN", "✓ LVGL display and touch drivers initialized");
-  deck_hid_init();
-  ESP_LOGI("MAIN", "✓ HID device initialized");
+  deck_usb_init();
+  ESP_LOGI("MAIN", "✓ CDC/HID device initialized");
   deck_create_ui();
-
-  update_slider_value(0, 30);
-  update_slider_value(1, 70);
-  update_slider_value(2, 90);
 
   const esp_timer_create_args_t tick_timer_args = {
       .callback = &lvgl_tick_inc_cb,
@@ -108,6 +120,7 @@ void app_main(void) {
   ESP_ERROR_CHECK(esp_timer_start_periodic(tick_timer, 10 * 1000)); // 10ms
 
   xTaskCreate(lvgl_timer_task, "lvgl", 6144, NULL, 4, NULL);
+  xTaskCreate(deck_cdc_read_task, "usb_read", 4096, NULL, 5, NULL);
 
   ESP_LOGI("MAIN", "✓ System initialized");
 }

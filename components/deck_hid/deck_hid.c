@@ -7,8 +7,10 @@
 #include "hal/usb_phy_types.h"
 #include "hal/usb_serial_jtag_ll.h"
 #include "soc/usb_serial_jtag_reg.h"
+#include "sys/unistd.h"
 #include "tinyusb_default_config.h"
 #include "tusb.h"
+#include <stdint.h>
 
 static void device_event_handler(tinyusb_event_t *event, void *arg) {
   switch (event->id) {
@@ -24,23 +26,6 @@ static void device_event_handler(tinyusb_event_t *event, void *arg) {
   }
 }
 
-static const tusb_desc_device_t device_desc = {
-    .bLength = sizeof(tusb_desc_device_t),
-    .bDescriptorType = TUSB_DESC_DEVICE,
-    .bcdUSB = 0x0200,
-    .bDeviceClass = 0x00,
-    .bDeviceSubClass = 0x00,
-    .bDeviceProtocol = 0x00,
-    .bMaxPacketSize0 = 64,
-    .idVendor = 0x303A,
-    .idProduct = 0x4001,
-    .bcdDevice = 0x0100,
-    .iManufacturer = 1,
-    .iProduct = 2,
-    .iSerialNumber = 3,
-    .bNumConfigurations = 1,
-};
-
 static const char lang_descriptor[] = {0x09, 0x04};
 static const char *descriptor_strings[] = {
     [0] = lang_descriptor, // static, not a compound literal
@@ -48,8 +33,8 @@ static const char *descriptor_strings[] = {
     [3] = "1234567890AB",      [4] = NULL,
 };
 
-void deck_hid_init(void) {
-  // Claim PHY for OTG before JTAG does
+void deck_usb_init(void) {
+  // Claim PHY once
   usb_phy_config_t phy_config = {
       .controller = USB_PHY_CTRL_OTG,
       .target = USB_PHY_TARGET_INT,
@@ -59,23 +44,16 @@ void deck_hid_init(void) {
   usb_phy_handle_t phy_handle;
   ESP_ERROR_CHECK(usb_new_phy(&phy_config, &phy_handle));
 
-  ESP_LOGI("HID", "Starting TinyUSB init...");
   tinyusb_config_t tusb_cfg = TINYUSB_DEFAULT_CONFIG(device_event_handler);
-
-  tusb_cfg.port = 0; // Use USB OTG port 0
+  tusb_cfg.port = 0;
   tusb_cfg.descriptor.device = &device_desc;
   tusb_cfg.descriptor.string = descriptor_strings;
   tusb_cfg.descriptor.string_count = 4;
-  tusb_cfg.descriptor.full_speed_config = deck_hid_config_descriptor;
-  tusb_cfg.phy.skip_setup = true; // Skip USB PHY setup since we do it manually
+  tusb_cfg.descriptor.full_speed_config =
+      composite_config_descriptor; // must include both CDC and HID interfaces
+  tusb_cfg.phy.skip_setup = true;
 
-  esp_err_t err = tinyusb_driver_install(&tusb_cfg);
-  if (err != ESP_OK) {
-    ESP_LOGE("HID", "Failed to initialize TinyUSB driver: %s",
-             esp_err_to_name(err));
-    return;
-  }
-  ESP_LOGI("HID", "HID device initialized");
+  ESP_ERROR_CHECK(tinyusb_driver_install(&tusb_cfg));
 }
 
 const uint8_t *tud_hid_descriptor_report_cb(uint8_t instance) {
@@ -119,4 +97,51 @@ void deck_hid_send_state(deck_input_report_t *report) {
     return;
   // Cast to raw bytes, skip the report ID (TinyUSB adds it)
   tud_hid_report(1, (uint8_t *)report, sizeof(deck_input_report_t));
+}
+
+void handle_received_command(uint8_t *buf, uint32_t len) {
+  if (len == 0)
+    return;
+
+  uint8_t report_id = buf[0];
+
+  switch (report_id) {
+  case 0x10: // Example: LED control
+    if (len < 2)
+      return;
+    uint8_t led_value = buf[1];
+    ESP_LOGI("HID", "Set LED to %d", led_value);
+    // TODO: call your LED driver here
+    break;
+
+  case 0x20: // Example: trigger some action
+    if (len < 3)
+      return;
+    uint8_t param1 = buf[1];
+    uint8_t param2 = buf[2];
+    ESP_LOGI("HID", "Action triggered with params: %d, %d", param1, param2);
+    // TODO: handle action
+    break;
+
+  default:
+    printf("Unknown report ID: %d\n", report_id);
+    break;
+  }
+}
+
+void deck_cdc_read_task(void *params) {
+  (void)params;
+  uint8_t buf[64];
+
+  for (;;) {
+    if (tud_cdc_connected()) {
+      ESP_LOGD("CDC", "Checking for data...");
+      uint32_t count = tud_cdc_read(buf, sizeof(buf));
+      if (count > 0) {
+        handle_received_command(buf, count);
+      }
+    }
+    ESP_LOGI("CDC", "No data, sleeping...");
+    vTaskDelay(pdMS_TO_TICKS(10));
+  }
 }

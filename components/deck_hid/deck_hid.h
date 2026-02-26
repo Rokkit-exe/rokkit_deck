@@ -23,5 +23,7 @@ typedef struct __attribute__((packed)) {
   uint8_t slider3;
 } deck_input_report_t;
 
-void deck_hid_init(void);
+void deck_usb_init(void);
 void deck_hid_send_state(deck_input_report_t *report);
+void deck_cdc_read_task(void *params);
+void deck_cdc_test_read_task(void *params);
