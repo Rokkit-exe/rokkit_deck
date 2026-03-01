@@ -1,6 +1,6 @@
 #include "deck_gl.h"
 #include "core/lv_obj_style.h"
-#include "deck_hid.h"
+#include "deck_cdc.h"
 #include "display/lv_display.h"
 #include "esp_lcd_panel_io.h"
 #include "esp_lcd_panel_ops.h"
@@ -50,7 +50,7 @@ static void grid_button_clicked_event_cb(lv_event_t *e) {
   report.slider3 = ui_ctx.slider_value_labels[2]
                        ? atoi(lv_label_get_text(ui_ctx.slider_value_labels[2]))
                        : 0;
-  deck_hid_send_state(&report);
+  send_input_report(&report);
 
   // Visual feedback - flash the button
   lv_obj_set_style_bg_color(btn, lv_color_hex(GREEN), LV_PART_MAIN);
@@ -89,7 +89,7 @@ static void slider_event_cb(lv_event_t *e) {
                : (ui_ctx.slider_value_labels[2]
                       ? atoi(lv_label_get_text(ui_ctx.slider_value_labels[2]))
                       : 0);
-  deck_hid_send_state(&report);
+  send_input_report(&report);
 }
 
 static lv_obj_t *create_label(lv_obj_t *parent, label_t *cfg) {
@@ -225,9 +225,9 @@ static void create_slider_grid(lv_obj_t *scr) {
                                 .min = 0,
                                 .max = 100,
                                 .value = 50,
-                                .main_color = lv_color_hex(BLUE),
+                                .main_color = lv_color_hex(RED),
                                 .indicator_color = lv_color_hex(RED),
-                                .knob_color = lv_color_hex(GREEN)});
+                                .knob_color = lv_color_hex(WHITE)});
 
     lv_obj_t *value_label =
         create_label(slider_box, &(label_t){.label = "50",
@@ -249,6 +249,13 @@ void update_slider_text(int slider_index, const char *label) {
   lv_label_set_text(ui_ctx.slider_name_labels[slider_index], label);
 }
 
+void update_slider_colors(int slider_index, lv_color_t color) {
+  lv_obj_set_style_bg_color(ui_ctx.sliders[slider_index], color, LV_PART_MAIN);
+  lv_obj_set_style_bg_color(ui_ctx.sliders[slider_index], color,
+                            LV_PART_INDICATOR);
+  lv_obj_invalidate(ui_ctx.sliders[slider_index]);
+}
+
 void update_button_color(int btn_index, lv_color_t color) {
   lv_obj_set_style_bg_color(ui_ctx.btn[btn_index], color, LV_PART_MAIN);
   lv_obj_invalidate(ui_ctx.btn[btn_index]);
@@ -257,6 +264,24 @@ void update_button_color(int btn_index, lv_color_t color) {
 void update_button_text(int btn_index, const char *label) {
   lv_label_set_text(ui_ctx.btn_labels[btn_index], label);
   lv_obj_invalidate(ui_ctx.btn_labels[btn_index]);
+}
+
+void update_ui(user_config_report_t *config) {
+  for (int i = 0; i < 8; i++) {
+    update_button_text(i, config->buttons[i].label);
+    lv_color_t btn_color = lv_color_make(config->buttons[i].bg_color[0],
+                                         config->buttons[i].bg_color[1],
+                                         config->buttons[i].bg_color[2]);
+    update_button_color(i, btn_color);
+  }
+
+  for (int i = 0; i < 3; i++) {
+    update_slider_text(i, config->sliders[i].label);
+    update_slider_colors(i, lv_color_make(config->sliders[i].fg_color[0],
+                                          config->sliders[i].fg_color[1],
+                                          config->sliders[i].fg_color[2]));
+    update_slider_value(i, config->sliders[i].value);
+  }
 }
 
 void deck_create_ui(void) {

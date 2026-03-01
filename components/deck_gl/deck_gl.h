@@ -1,5 +1,6 @@
 #pragma once
 
+#include "deck_cdc.h"
 #include "esp_lcd_panel_io.h"
 #include "lvgl.h"
 #include <stdint.h>
@@ -103,3 +104,4 @@ void update_slider_value(int slider_index, int value);
 void update_slider_text(int slider_index, const char *label);
 void update_button_color(int btn_index, lv_color_t color);
 void update_button_text(int btn_index, const char *label);
+void update_ui(user_config_report_t *config);

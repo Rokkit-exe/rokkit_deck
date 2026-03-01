@@ -1,6 +1,6 @@
 #include "bsp_waveshare.h"
+#include "deck_cdc.h"
 #include "deck_gl.h"
-#include "deck_hid.h"
 #include "driver/gpio.h"
 #include "driver/spi_master.h"
 #include "esp_err.h"
@@ -14,6 +14,7 @@
 #include "esp_log.h"
 #include "esp_timer.h"
 #include "freertos/FreeRTOS.h"
+#include "freertos/idf_additions.h"
 #include "freertos/semphr.h"
 #include "freertos/task.h"
 #include "lvgl.h"
@@ -70,21 +71,6 @@ static void lvgl_timer_task(void *arg) {
   }
 }
 
-static void usb_task(void *arg) {
-  ESP_LOGI("USB", "USB task started");
-  while (1) {
-    if (!tud_cdc_connected()) {
-      ESP_LOGW("USB", "CDC device not connected");
-      vTaskDelay(pdMS_TO_TICKS(500));
-    } else {
-      ESP_LOGI("USB", "CDC device connected");
-      deck_cdc_read_task(
-          NULL); // This will block until the device is disconnected
-      vTaskDelay(pdMS_TO_TICKS(10));
-    }
-  }
-}
-
 void app_main(void) {
 
   esp_err_t err = bsp_init(&lcd_config, &handles);
@@ -120,7 +106,10 @@ void app_main(void) {
   ESP_ERROR_CHECK(esp_timer_start_periodic(tick_timer, 10 * 1000)); // 10ms
 
   xTaskCreate(lvgl_timer_task, "lvgl", 6144, NULL, 4, NULL);
-  xTaskCreate(deck_cdc_read_task, "usb_read", 4096, NULL, 5, NULL);
+  xTaskCreatePinnedToCore(usb_device_task, "usb", 4096, NULL,
+                          configMAX_PRIORITIES - 1, NULL, 0);
+  // xTaskCreatePinnedToCore(deck_cdc_read_task, "cdc_rx", 4096, NULL, 5, NULL,
+  // 0);
 
   ESP_LOGI("MAIN", "✓ System initialized");
 }

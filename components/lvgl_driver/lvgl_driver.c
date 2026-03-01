@@ -36,8 +36,8 @@ static void touchpad_read(lv_indev_t *indev, lv_indev_data_t *data) {
     data->point.y = ctx->lcd_height - raw_x;
 
     data->state = LV_INDEV_STATE_PRESSED;
-    ESP_LOGI("TOUCH", "Raw: (%d, %d) -> Transformed: (%d, %d)", raw_x, raw_y,
-             data->point.x, data->point.y);
+    // ESP_LOGI("TOUCH", "Raw: (%d, %d) -> Transformed: (%d, %d)", raw_x, raw_y,
+    //          data->point.x, data->point.y);
   } else {
     data->state = LV_INDEV_STATE_RELEASED;
   }
