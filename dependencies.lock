@@ -1,4 +1,12 @@
 dependencies:
+  encoder:
+    component_hash: 0e08386c072d936c17167fe72cbd3295bc81f540f24b71a44e082082f0d35fdd
+    dependencies: []
+    source:
+      git: https://github.com/Rokkit-exe/esp32_encoder_component.git
+      path: .
+      type: git
+    version: a96be73eb800c9569377349120ddb03d041496b5
   espressif/cmake_utilities:
     component_hash: 351350613ceafba240b761b4ea991e0f231ac7a9f59a9ee901f751bddc0bb18f
     dependencies:
@@ -53,6 +61,20 @@ dependencies:
       registry_url: https://components.espressif.com/
       type: service
     version: 1.2.0~1
+  espressif/esp_lvgl_port:
+    component_hash: b6360960f47b6776462e7092861b3ea66477ffb762a01baa0aecbb3d74cd50f4
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=5.1'
+    - name: lvgl/lvgl
+      registry_url: https://components.espressif.com
+      require: public
+      version: '>=8,<10'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 2.7.2
   espressif/esp_tinyusb:
     component_hash: 6f1f0c140990bf27a86611e3c1f47f9fa8468bffc3bf1eb6d551cb09f31f8908
     dependencies:
@@ -92,19 +114,21 @@ dependencies:
       type: idf
     version: 5.5.2
   lvgl/lvgl:
-    component_hash: 17e68bfd21f0edf4c3ee838e2273da840bf3930e5dbc3bfa6c1190c3aed41f9f
+    component_hash: 184e532558c1c45fefed631f3e235423d22582aafb4630f3e8885c35281a49ae
     dependencies: []
     source:
       registry_url: https://components.espressif.com/
       type: service
-    version: 9.4.0
+    version: 9.5.0
 direct_dependencies:
+- encoder
 - espressif/esp_lcd_st7796
 - espressif/esp_lcd_touch
 - espressif/esp_lcd_touch_gt911
+- espressif/esp_lvgl_port
 - espressif/esp_tinyusb
 - idf
 - lvgl/lvgl
-manifest_hash: 89ea6dba5583dd2d90b945622fcec6700c184b03509068f96b4ac035ac4fbc61
+manifest_hash: cb5d21c2b3b7ce780a71978bc827534b9bf583781eaf311c1a096443f45da7a6
 target: esp32s3
 version: 2.0.0

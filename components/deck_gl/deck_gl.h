@@ -1,5 +1,6 @@
 #pragma once
 
+#include "bsp_waveshare.h"
 #include "deck_cdc.h"
 #include "esp_lcd_panel_io.h"
 #include "lvgl.h"
@@ -99,9 +100,12 @@ typedef struct {
   lv_obj_t *slider_value_labels[3];
 } ui_context_t;
 
-void deck_create_ui(void);
+void init_deck(bsp_handles_t *handles, int hor_res, int ver_res);
 void update_slider_value(int slider_index, int value);
 void update_slider_text(int slider_index, const char *label);
 void update_button_color(int btn_index, lv_color_t color);
 void update_button_text(int btn_index, const char *label);
 void update_ui(user_config_report_t *config);
+void update_slider_value(int slider_index, int value);
+bool deck_ui_lock(uint32_t timeout_ms);
+void deck_ui_unlock(void);

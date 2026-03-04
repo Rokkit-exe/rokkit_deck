@@ -3,6 +3,7 @@
 #include "deck_gl.h"
 #include "driver/gpio.h"
 #include "driver/spi_master.h"
+#include "encoder.h"
 #include "esp_err.h"
 #include "esp_lcd_panel_io.h"
 #include "esp_lcd_panel_ops.h"
@@ -19,6 +20,7 @@
 #include "freertos/task.h"
 #include "lvgl.h"
 #include "lvgl_driver.h"
+#include "portmacro.h"
 #include "tusb.h"
 #include <stdint.h>
 #include <stdio.h>
@@ -37,6 +39,20 @@
 #define C_SCL 7
 #define C_INT 17
 #define C_RST 16
+
+#define ENCODER_CLK 18
+#define ENCODER_DT 8
+#define ENCODER_SW 9
+
+static encoder_config_t encoder_config = {
+    .clk_pin = ENCODER_CLK,
+    .dt_pin = ENCODER_DT,
+    .sw_pin = ENCODER_SW,
+    .min_value = 0,    // Minimum value for the encoder
+    .max_value = 100,  // Maximum value for the encoder
+    .step = 5,         // Step value for each detent
+    .initial_value = 0 // Initial value of the encoder
+};
 
 static bsp_config_t lcd_config = {.lcd_host = LCD_HOST,
                                   .spi_miso = SPI_MISO,
@@ -71,9 +87,38 @@ static void lvgl_timer_task(void *arg) {
   }
 }
 
+static void encoder_task(void *arg) {
+  Encoder *encoder = (Encoder *)arg;
+
+  while (1) {
+    RotationType rotation = encoder_check_rotation(encoder);
+    switch (rotation) {
+    case CLOCKWISE:
+      if (deck_ui_lock(portMAX_DELAY)) {
+        update_slider_value(0, encoder_get_value(encoder));
+        deck_ui_unlock();
+      }
+      break;
+    case COUNTERCLOCKWISE:
+      if (deck_ui_lock(portMAX_DELAY)) {
+        update_slider_value(0, encoder_get_value(encoder));
+        deck_ui_unlock();
+      }
+      break;
+    case NONE:
+      break;
+    default:
+      break;
+    }
+
+    vTaskDelay(pdMS_TO_TICKS(10));
+  }
+}
+
 void app_main(void) {
 
   esp_err_t err = bsp_init(&lcd_config, &handles);
+  Encoder *encoder = init_encoder(encoder_config);
 
   if (err != ESP_OK || handles.lcd_panel == NULL || handles.lcd_io == NULL) {
     ESP_LOGE("MAIN", "❌ LCD panel NOT initialized!");
@@ -86,15 +131,10 @@ void app_main(void) {
   lcd_set_orientation(&handles.lcd_panel, INVERTED_LANDSCAPE);
   vTaskDelay(pdMS_TO_TICKS(100));
 
-  lv_init();
-
-  lvgl_create_display(handles.lcd_panel, LCD_HOR_RES, LCD_VER_RES);
-  lvgl_create_touch(handles.touch_panel, LCD_HOR_RES, LCD_VER_RES);
-
-  ESP_LOGI("MAIN", "✓ LVGL display and touch drivers initialized");
   deck_usb_init();
   ESP_LOGI("MAIN", "✓ CDC/HID device initialized");
-  deck_create_ui();
+  init_deck(&handles, LCD_HOR_RES, LCD_VER_RES);
+  ESP_LOGI("MAIN", "✓ LVGL display and touch drivers initialized");
 
   const esp_timer_create_args_t tick_timer_args = {
       .callback = &lvgl_tick_inc_cb,
@@ -108,8 +148,7 @@ void app_main(void) {
   xTaskCreate(lvgl_timer_task, "lvgl", 6144, NULL, 4, NULL);
   xTaskCreatePinnedToCore(usb_device_task, "usb", 4096, NULL,
                           configMAX_PRIORITIES - 1, NULL, 0);
-  // xTaskCreatePinnedToCore(deck_cdc_read_task, "cdc_rx", 4096, NULL, 5, NULL,
-  // 0);
+  xTaskCreate(encoder_task, "encoder", 2048, encoder, 5, NULL);
 
   ESP_LOGI("MAIN", "✓ System initialized");
 }

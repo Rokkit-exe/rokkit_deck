@@ -1,4 +1,5 @@
 #include "deck_gl.h"
+#include "bsp_waveshare.h"
 #include "core/lv_obj_style.h"
 #include "deck_cdc.h"
 #include "display/lv_display.h"
@@ -7,6 +8,7 @@
 #include "esp_lcd_panel_vendor.h"
 #include "esp_lcd_types.h"
 #include "esp_log.h"
+#include "esp_lvgl_port.h"
 #include "esp_timer.h"
 #include "font/lv_font.h"
 #include "freertos/FreeRTOS.h"
@@ -15,10 +17,12 @@
 #include "layouts/grid/lv_grid.h"
 #include "lv_api_map_v8.h"
 #include "lvgl.h"
+#include "lvgl_driver.h"
 #include "misc/lv_area.h"
 #include "misc/lv_color.h"
 #include "misc/lv_event.h"
 #include "misc/lv_types.h"
+#include "stdio.h"
 #include "tick/lv_tick.h"
 #include "widgets/label/lv_label.h"
 #include <stdint.h>
@@ -33,6 +37,7 @@
 
 ui_context_t ui_ctx;
 static int slider_indices[] = {0, 1, 2};
+
 static void grid_button_clicked_event_cb(lv_event_t *e) {
   lv_obj_t *btn = lv_event_get_target(e);
   int btn_id = (int)lv_event_get_user_data(e);
@@ -241,8 +246,14 @@ static void create_slider_grid(lv_obj_t *scr) {
 }
 
 void update_slider_value(int slider_index, int value) {
-  lv_slider_set_value(ui_ctx.sliders[slider_index], value, LV_ANIM_OFF);
-  lv_label_set_text_fmt(ui_ctx.slider_value_labels[slider_index], "%d", value);
+  if (lvgl_port_lock(portMAX_DELAY)) {
+    lv_slider_set_value(ui_ctx.sliders[slider_index], value, LV_ANIM_OFF);
+    lv_label_set_text_fmt(ui_ctx.slider_value_labels[slider_index], "%d",
+                          value);
+    lv_obj_send_event(ui_ctx.sliders[slider_index], LV_EVENT_VALUE_CHANGED,
+                      NULL);
+    deck_ui_unlock();
+  }
 }
 
 void update_slider_text(int slider_index, const char *label) {
@@ -284,11 +295,29 @@ void update_ui(user_config_report_t *config) {
   }
 }
 
-void deck_create_ui(void) {
+bool deck_ui_lock(uint32_t timeout_ms) { return lvgl_port_lock(timeout_ms); }
+
+void deck_ui_unlock(void) { lvgl_port_unlock(); }
+
+void init_deck(bsp_handles_t *handles, int hor_res, int ver_res) {
+  lv_init();
+
+  lvgl_create_display(handles->lcd_panel, hor_res, ver_res);
+  lvgl_create_touch(handles->touch_panel, hor_res, ver_res);
+  lvgl_port_cfg_t cfg = ESP_LVGL_PORT_INIT_CONFIG();
+  lvgl_port_init(&cfg);
   lv_obj_t *scr = lv_screen_active();
 
   lv_obj_set_style_bg_color(scr, lv_color_hex(BLACK), LV_PART_MAIN);
 
-  create_button_grid(scr);
-  create_slider_grid(scr);
+  if (lvgl_port_lock(portMAX_DELAY)) {
+    create_button_grid(scr);
+    deck_ui_unlock();
+  }
+  vTaskDelay(pdMS_TO_TICKS(10));
+  if (lvgl_port_lock(portMAX_DELAY)) {
+    create_slider_grid(scr);
+    deck_ui_unlock();
+  }
+  vTaskDelay(pdMS_TO_TICKS(10));
 }

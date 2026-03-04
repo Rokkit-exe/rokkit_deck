@@ -19,3 +19,7 @@ dependencies:
   espressif/esp_lcd_touch_gt911: '*'
   espressif/esp_lcd_touch: ^1.2.1
   espressif/esp_tinyusb: ~2.0.0
+  encoder:
+    git: https://github.com/Rokkit-exe/esp32_encoder_component.git
+    version: main
+  espressif/esp_lvgl_port: '*'
